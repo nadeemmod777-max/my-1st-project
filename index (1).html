@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IG.Nadeem's.Downloader – Premium Instagram Downloader</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#03040a;--surf:rgba(255,255,255,0.04);--border:rgba(255,255,255,0.08);
+  --neon:#a78bfa;--neon2:#38bdf8;--neon3:#f472b6;
+  --text:#e2e8f0;--muted:#64748b;
+  --display:'Syne',sans-serif;--body:'DM Sans',sans-serif;
+  --ease:cubic-bezier(0.16,1,0.3,1);--spring:cubic-bezier(0.34,1.56,0.64,1);
+}
+html{overflow-x:hidden;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--body);overflow-x:hidden;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.6}
+
+/* ORBS */
+.orb{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0}
+.o1{width:700px;height:700px;background:radial-gradient(circle,rgba(167,139,250,0.13) 0%,transparent 70%);top:-200px;left:-150px;animation:of1 18s ease-in-out infinite}
+.o2{width:600px;height:600px;background:radial-gradient(circle,rgba(56,189,248,0.1) 0%,transparent 70%);bottom:-150px;right:-120px;animation:of2 22s ease-in-out infinite}
+.o3{width:450px;height:450px;background:radial-gradient(circle,rgba(244,114,182,0.08) 0%,transparent 70%);top:45%;left:45%;animation:of3 16s ease-in-out infinite}
+@keyframes of1{0%,100%{transform:translate(0,0)}40%{transform:translate(70px,50px)}70%{transform:translate(-30px,20px)}}
+@keyframes of2{0%,100%{transform:translate(0,0)}40%{transform:translate(-50px,-40px)}70%{transform:translate(25px,-20px)}}
+@keyframes of3{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.2)}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:62px;display:flex;align-items:center;justify-content:center;background:rgba(3,4,10,0.75);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.nlogo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nmark{width:34px;height:34px;background:linear-gradient(135deg,var(--neon),var(--neon2));border-radius:9px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-weight:800;font-size:13px;color:#fff;box-shadow:0 0 18px rgba(167,139,250,0.45)}
+.ntext{font-family:var(--display);font-weight:700;font-size:17px;background:linear-gradient(90deg,var(--neon),var(--neon2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;padding:78px 40px 36px;max-width:1180px;margin:0 auto;position:relative;z-index:1}
+.hi{display:flex;align-items:center;gap:56px;width:100%}
+.hl{flex:1;min-width:0}
+.hlabel{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;background:rgba(167,139,250,0.1);border:1px solid rgba(167,139,250,0.22);border-radius:100px;font-size:10.5px;font-weight:600;letter-spacing:2.5px;color:var(--neon);text-transform:uppercase;margin-bottom:18px}
+.hlabel::before{content:'';width:5px;height:5px;background:var(--neon);border-radius:50%;animation:dot 2s ease-in-out infinite}
+@keyframes dot{0%,100%{opacity:1}50%{opacity:0.3}}
+.hbrand{font-family:var(--display);font-weight:800;font-size:clamp(58px,9vw,100px);line-height:.95;letter-spacing:-4px;margin-bottom:18px;display:block}
+.bc{display:inline-block;background:linear-gradient(135deg,var(--neon) 0%,var(--neon2) 50%,var(--neon3) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:bg 4s ease-in-out infinite}
+@keyframes bg{0%,100%{filter:drop-shadow(0 0 22px rgba(167,139,250,.65))}50%{filter:drop-shadow(0 0 44px rgba(56,189,248,.85))}}
+.hhead{font-family:var(--display);font-weight:700;font-size:clamp(17px,2.4vw,24px);line-height:1.3;margin-bottom:12px;letter-spacing:-.4px}
+.hdesc{font-size:14.5px;color:var(--muted);line-height:1.75;max-width:430px;margin-bottom:26px}
+.hdesc b{color:var(--text);font-weight:500}
+
+.cta{display:inline-flex;align-items:center;gap:10px;padding:13px 30px;background:linear-gradient(135deg,var(--neon),var(--neon2));border-radius:13px;color:#fff;text-decoration:none;font-family:var(--display);font-weight:700;font-size:14.5px;letter-spacing:.3px;position:relative;overflow:hidden;transition:transform .35s var(--spring),box-shadow .35s ease;box-shadow:0 0 28px rgba(167,139,250,.3)}
+.cta::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.18),transparent);transform:translateX(-110%);transition:transform .55s ease}
+.cta:hover{transform:translateY(-3px) scale(1.025);box-shadow:0 10px 44px rgba(167,139,250,.5)}
+.cta:hover::before{transform:translateX(110%)}
+.cta svg{transition:transform .3s var(--spring)}
+.cta:hover svg{transform:translateX(4px)}
+
+.hr{flex:0 0 400px;display:flex;align-items:center;justify-content:center;position:relative}
+.hglow{position:absolute;width:280px;height:280px;background:radial-gradient(circle,rgba(167,139,250,.28) 0%,rgba(56,189,248,.16) 40%,transparent 70%);border-radius:50%;filter:blur(28px);animation:hg 4s ease-in-out infinite}
+@keyframes hg{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.18);opacity:1}}
+.himg{width:100%;max-width:370px;height:auto;object-fit:contain;position:relative;z-index:1;animation:hf 6s ease-in-out infinite;filter:drop-shadow(0 20px 55px rgba(167,139,250,.4))}
+@keyframes hf{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-12px) rotate(.6deg)}75%{transform:translateY(-5px) rotate(-.5deg)}}
+
+/* SECTIONS */
+section{position:relative;z-index:1}
+.stag{text-align:center;font-size:10.5px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--neon);margin-bottom:8px}
+.stit{text-align:center;font-family:var(--display);font-weight:800;font-size:clamp(26px,4vw,42px);letter-spacing:-1.5px;line-height:1.08;margin-bottom:44px}
+.stit span{background:linear-gradient(90deg,var(--neon),var(--neon2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* FEATURES */
+#feat{padding:76px 40px;max-width:1180px;margin:0 auto}
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.fc{background:var(--surf);border:1px solid var(--border);border-radius:18px;padding:26px 22px;position:relative;overflow:hidden;transition:transform .4s var(--ease),box-shadow .4s ease,border-color .3s ease;cursor:default}
+.fc::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(167,139,250,.05),transparent);opacity:0;transition:opacity .4s ease}
+.fc::after{content:'';position:absolute;inset:-1px;border-radius:18px;background:linear-gradient(135deg,var(--neon),var(--neon2));z-index:-1;opacity:0;transition:opacity .4s ease;filter:blur(1px)}
+.fc:hover{transform:translateY(-6px);box-shadow:0 18px 54px rgba(167,139,250,.14)}
+.fc:hover::before{opacity:1}
+.fc:hover::after{opacity:.28}
+.fc:hover svg path,.fc:hover svg circle,.fc:hover svg rect,.fc:hover svg polyline{stroke:var(--neon);filter:drop-shadow(0 0 5px var(--neon))}
+.ficon{width:46px;height:46px;margin-bottom:14px}
+.ficon svg{width:46px;height:46px;transition:all .3s ease}
+.ficon svg path,.ficon svg circle,.ficon svg rect,.ficon svg polyline{transition:all .3s ease}
+.fn{font-family:var(--display);font-weight:700;font-size:15.5px;margin-bottom:5px;letter-spacing:-.3px}
+.fd{font-size:13px;color:var(--muted);line-height:1.6}
+
+/* WHY */
+#why{padding:76px 40px;max-width:1180px;margin:0 auto}
+.wblocks{display:flex;gap:14px}
+.wb{flex:1;background:var(--surf);border:1px solid var(--border);border-radius:18px;padding:28px 22px;transition:transform .4s var(--ease)}
+.wb:hover{transform:translateY(-5px)}
+.wnum{font-family:var(--display);font-weight:800;font-size:52px;line-height:1;background:linear-gradient(135deg,rgba(167,139,250,.18),rgba(56,189,248,.12));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
+.wico{width:38px;height:38px;background:rgba(167,139,250,.1);border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.wt{font-family:var(--display);font-weight:700;font-size:17px;margin-bottom:6px;letter-spacing:-.3px}
+.wx{font-size:13px;color:var(--muted);line-height:1.65}
+
+/* HOW */
+#how{padding:76px 40px;max-width:1180px;margin:0 auto}
+.srow{display:flex;align-items:center}
+.step{flex:1;text-align:center;padding:0 18px}
+.snum{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,rgba(167,139,250,.14),rgba(56,189,248,.08));border:2px solid rgba(167,139,250,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-family:var(--display);font-weight:800;font-size:19px;color:var(--neon);position:relative}
+.snum::before{content:'';position:absolute;inset:-5px;border-radius:50%;border:1px solid rgba(167,139,250,.14)}
+.stitle{font-family:var(--display);font-weight:700;font-size:15.5px;margin-bottom:5px}
+.sdesc{font-size:13px;color:var(--muted);line-height:1.55}
+.conn{flex:0 0 72px;height:2px;position:relative}
+.ct{position:absolute;inset:0;background:rgba(255,255,255,.07);border-radius:2px}
+.cf{position:absolute;inset:0;background:linear-gradient(90deg,var(--neon),var(--neon2));border-radius:2px;transform:scaleX(0);transform-origin:left;transition:transform 1.1s var(--ease)}
+.cf.active{transform:scaleX(1)}
+
+/* FINAL CTA */
+#fcta{padding:76px 40px 90px;max-width:1180px;margin:0 auto}
+.ctac{background:var(--surf);border:1px solid var(--border);border-radius:26px;padding:56px 44px;text-align:center;position:relative;overflow:hidden}
+.ctac::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(167,139,250,.07),rgba(56,189,248,.04),rgba(244,114,182,.04));pointer-events:none}
+.ctac::after{content:'';position:absolute;inset:-2px;border-radius:26px;background:linear-gradient(135deg,rgba(167,139,250,.32),rgba(56,189,248,.22),rgba(244,114,182,.18));z-index:-1;filter:blur(2px);animation:bg2 4s ease-in-out infinite}
+@keyframes bg2{0%,100%{opacity:.5}50%{opacity:1}}
+.ctit{font-family:var(--display);font-weight:800;font-size:clamp(26px,4vw,46px);letter-spacing:-1.5px;margin-bottom:10px}
+.ctit span{background:linear-gradient(90deg,var(--neon),var(--neon2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.csub{font-size:14.5px;color:var(--muted);margin-bottom:26px}
+
+/* SCROLL ANIM */
+.ae{opacity:0;transform:translateY(28px) scale(.98);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.ae.v{opacity:1;transform:translateY(0) scale(1)}
+.d1{transition-delay:.05s}.d2{transition-delay:.1s}.d3{transition-delay:.15s}.d4{transition-delay:.2s}.d5{transition-delay:.25s}.d6{transition-delay:.3s}
+.wr .w{display:inline-block;opacity:0;transform:translateY(18px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.wr.v .w{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:920px){.fgrid{grid-template-columns:repeat(2,1fr)}.hr{flex:0 0 300px}}
+@media(max-width:700px){
+  #hero{padding:78px 20px 30px}
+  .hi{gap:20px}
+  .hr{flex:0 0 180px}
+  .himg{max-width:200px}
+  .hbrand{font-size:clamp(44px,11vw,72px)}
+  #feat,#why,#how,#fcta{padding:56px 18px}
+  .wblocks{gap:9px}
+  .wb{padding:18px 13px}
+  .srow{gap:0}
+  .step{padding:0 8px}
+  .conn{flex:0 0 36px}
+  .ctac{padding:32px 18px}
+}
+@media(max-width:440px){.hr{flex:0 0 140px}.himg{max-width:160px}}
+</style>
+</head>
+<body>
+<div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+
+<nav><a href="index.html" class="nlogo"><div class="nmark">IG</div><span class="ntext">IG.Nadeem's.Downloader</span></a></nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hi">
+    <div class="hl">
+      <div class="hlabel"><span>WELCOME TO IG.Nadeem's.Downloader</span></div>
+      <span class="hbrand" id="hbrand">IG.Nadeem's.Downloader</span>
+      <h1 class="hhead wr" id="hh">Download Instagram Reels &amp; Posts Instantly</h1>
+      <p class="hdesc"><b>Fastest, cleanest</b> way to save Instagram content — reels, posts, stories in <b>full HD</b>, no login, no limits, no nonsense.</p>
+      <a href="app.html" class="cta" id="ctaMain">
+        Start Downloading
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M2.5 7.5h10M8.5 3.5l4 4-4 4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <div class="hr">
+      <div class="hglow"></div>
+      <img src="solo.png" alt="IG.Nadeem's.Downloader Preview" class="himg" id="himg"
+        onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22370%22 height=%22480%22 viewBox=%220 0 370 480%22%3E%3Cdefs%3E%3ClinearGradient id=%22g1%22 x1=%220%22 y1=%220%22 x2=%221%22 y2=%221%22%3E%3Cstop offset=%220%22 stop-color=%22%23a78bfa%22 stop-opacity=%22.25%22/%3E%3Cstop offset=%221%22 stop-color=%22%2338bdf8%22 stop-opacity=%22.15%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width=%22370%22 height=%22480%22 rx=%2240%22 fill=%22url(%23g1)%22 stroke=%22%23a78bfa%22 stroke-opacity=%22.25%22/%3E%3Crect x=%2235%22 y=%2256%22 width=%22300%22 height=%2256%22 rx=%2212%22 fill=%22rgba(255,255,255,.05)%22/%3E%3Crect x=%2235%22 y=%22130%22 width=%22300%22 height=%22210%22 rx=%2216%22 fill=%22rgba(255,255,255,.04)%22/%3E%3Ccircle cx=%22185%22 cy=%22235%22 r=%2245%22 fill=%22rgba(167,139,250,.12)%22 stroke=%22%23a78bfa%22 stroke-opacity=%22.3%22/%3E%3Ctext x=%22185%22 y=%22241%22 font-family=%22sans-serif%22 font-size=%2218%22 fill=%22%23a78bfa%22 text-anchor=%22middle%22%3EIG.Nadeem's.Downloader%3C/text%3E%3Crect x=%2235%22 y=%22366%22 width=%22300%22 height=%2256%22 rx=%2212%22 fill=%22rgba(167,139,250,.12)%22/%3E%3Ctext x=%22185%22 y=%22400%22 font-family=%22sans-serif%22 font-size=%2214%22 fill=%22%23e2e8f0%22 text-anchor=%22middle%22%3EDownload Now%3C/text%3E%3C/svg%3E'">
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="feat">
+  <div class="stag ae">CAPABILITIES</div>
+  <h2 class="stit ae d1">Everything You <span>Need</span></h2>
+  <div class="fgrid">
+    <div class="fc ae d1">
+      <div class="ficon"><svg viewBox="0 0 46 46" fill="none"><circle cx="23" cy="23" r="18" stroke="rgba(167,139,250,.2)" stroke-width="1"/><path d="M23 10v18M16 21l7 7 7-7" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 34h22" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round"/></svg></div>
+      <div class="fn">Fast Download</div><div class="fd">Lightning-quick fetches. Your media ready before you blink, powered by optimized API calls.</div>
+    </div>
+    <div class="fc ae d2">
+      <div class="ficon"><svg viewBox="0 0 46 46" fill="none"><rect x="6" y="10" width="34" height="26" rx="4" stroke="#38bdf8" stroke-width="2.2"/><path d="M17 22l4 4 8-8" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 18h3M37 18h3M6 28h3M37 28h3" stroke="rgba(56,189,248,.4)" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+      <div class="fn">HD Quality</div><div class="fd">Download in the highest resolution available. Crystal-clear video and image quality, always.</div>
+    </div>
+    <div class="fc ae d3">
+      <div class="ficon"><svg viewBox="0 0 46 46" fill="none"><circle cx="23" cy="18" r="7" stroke="#f472b6" stroke-width="2.2"/><path d="M10 36c0-7.18 5.82-13 13-13s13 5.82 13 13" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round"/><path d="M31 13l3-3M34 17h2.5M31.5 21l2.5 1.5" stroke="rgba(244,114,182,.5)" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+      <div class="fn">No Login Required</div><div class="fd">Completely anonymous. No account, no credentials, no tracking. Just paste and download.</div>
+    </div>
+    <div class="fc ae d4">
+      <div class="ficon"><svg viewBox="0 0 46 46" fill="none"><path d="M23 7l3.8 7.7 8.5 1.2-6.2 6 1.5 8.5L23 26.5l-7.6 4 1.5-8.5-6.2-6 8.5-1.2z" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="23" cy="37" r="2.5" stroke="#38bdf8" stroke-width="1.8"/><path d="M18 37h-5M28 37h5" stroke="rgba(56,189,248,.4)" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+      <div class="fn">100% Free</div><div class="fd">No hidden fees, no premium traps, no subscription walls. Genuinely free, forever.</div>
+    </div>
+    <div class="fc ae d5">
+      <div class="ficon"><svg viewBox="0 0 46 46" fill="none"><path d="M23 6l13 4.7v9.6c0 7.5-5.4 14.5-13 16.7C16.4 34.8 11 27.8 11 20.3v-9.6z" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 23l4 4 8-8" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="fn">Secure</div><div class="fd">No data stored, no URLs logged. Privacy is an architecture choice, not an afterthought.</div>
+    </div>
+    <div class="fc ae d6">
+      <div class="ficon"><svg viewBox="0 0 46 46" fill="none"><circle cx="23" cy="23" r="10" stroke="#f472b6" stroke-width="2.2"/><path d="M8 23h4M34 23h4M23 8v4M23 34v4" stroke="rgba(244,114,182,.4)" stroke-width="1.4" stroke-linecap="round"/><path d="M19 23l2.5 2.5 5-5.5" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="fn">Unlimited Downloads</div><div class="fd">No daily caps, no cooldowns. Download as much as you want, whenever you need.</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE -->
+<section id="why">
+  <div class="stag ae">WHY US</div>
+  <h2 class="stit ae d1">Built <span>Different</span></h2>
+  <div class="wblocks">
+    <div class="wb ae d1">
+      <div class="wico"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 1.5l2.3 4.6 5.1.75-3.7 3.6 .87 5.09L9 13.1l-4.6 2.45.87-5.1L1.6 6.85l5.1-.75z" stroke="#a78bfa" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+      <div class="wnum">01</div><div class="wt">Lightning Speed</div>
+      <div class="wx">Edge-optimized API with minimal hops. Average response under 800ms globally. No spinner anxiety.</div>
+    </div>
+    <div class="wb ae d2">
+      <div class="wico"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2.5 2.5l13 13M15.5 2.5l-13 13" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+      <div class="wnum">02</div><div class="wt">Zero Ads</div>
+      <div class="wx">No banners, no pop-ups, no redirects. A clean experience with absolute zero interruptions.</div>
+    </div>
+    <div class="wb ae d3">
+      <div class="wico"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="14" height="14" rx="3" stroke="#f472b6" stroke-width="1.4"/><path d="M6 9h6M6 6.5h6M6 11.5h4" stroke="#f472b6" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+      <div class="wnum">03</div><div class="wt">Clean UI</div>
+      <div class="wx">Every pixel obsessively designed. No clutter, no noise. Just your download, front and center.</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="stag ae">PROCESS</div>
+  <h2 class="stit ae d1">How It <span>Works</span></h2>
+  <div class="srow" id="srow">
+    <div class="step ae d1">
+      <div class="snum">1</div>
+      <div class="stitle">Copy Link</div>
+      <div class="sdesc">Open Instagram, tap share on any reel or post and copy the link.</div>
+    </div>
+    <div class="conn"><div class="ct"></div><div class="cf" id="c1"></div></div>
+    <div class="step ae d2">
+      <div class="snum">2</div>
+      <div class="stitle">Paste Link</div>
+      <div class="sdesc">Paste into IG.Nadeem's.Downloader and hit Fetch. Our API does the heavy lifting instantly.</div>
+    </div>
+    <div class="conn"><div class="ct"></div><div class="cf" id="c2"></div></div>
+    <div class="step ae d3">
+      <div class="snum">3</div>
+      <div class="stitle">Download</div>
+      <div class="sdesc">Preview and tap Download. Saved directly to your device, zero friction.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="fcta">
+  <div class="ctac ae">
+    <div class="ctit">Start Downloading <span>Now</span></div>
+    <div class="csub">Free, fast, no login — exactly as it should be.</div>
+    <a href="app.html" class="cta">
+      Open the Tool
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M2.5 7.5h10M8.5 3.5l4 4-4 4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<script>
+// Word split
+function splitW(el){
+  const t=el.textContent;
+  el.innerHTML=t.split(' ').map((w,i)=>`<span class="w" style="transition-delay:${i*0.07}s">${w}&nbsp;</span>`).join('');
+}
+document.querySelectorAll('.wr').forEach(splitW);
+
+// IntersectionObserver
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('v');e.target.classList.remove('exit')}
+    else{e.target.classList.remove('v')}
+  });
+},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.ae').forEach(el=>io.observe(el));
+
+// Connector
+const co=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      setTimeout(()=>document.getElementById('c1').classList.add('active'),280);
+      setTimeout(()=>document.getElementById('c2').classList.add('active'),580);
+    } else {
+      document.getElementById('c1').classList.remove('active');
+      document.getElementById('c2').classList.remove('active');
+    }
+  });
+},{threshold:.4});
+const sr=document.getElementById('srow');
+if(sr) co.observe(sr);
+
+// Parallax
+let tick=false;
+window.addEventListener('scroll',()=>{
+  if(!tick){requestAnimationFrame(()=>{
+    const sy=window.scrollY;
+    document.querySelectorAll('.wb').forEach((el,i)=>{
+      const f=(i===0?.025:i===1?-.02:.018);
+      el.style.transform=`translateY(${sy*f}px)`;
+    });
+    tick=false;
+  });tick=true;}
+},{passive:true});
+
+// Brand char anim
+const hb=document.getElementById('hbrand');
+if(hb){
+  const chars=[...hb.textContent];
+  hb.innerHTML=chars.map((c,i)=>`<span class="bc" style="animation-delay:${i*.18}s">${c===' '?'&nbsp;':c}</span>`).join('');
+}
+
+// Hero reveal
+document.getElementById('hh')&&setTimeout(()=>document.getElementById('hh').classList.add('v'),420);
+
+// Magnetic CTA
+document.querySelectorAll('.cta').forEach(btn=>{
+  btn.addEventListener('mousemove',e=>{
+    const r=btn.getBoundingClientRect();
+    const dx=e.clientX-r.left-r.width/2,dy=e.clientY-r.top-r.height/2;
+    btn.style.transform=`translateY(-3px) scale(1.025) translate(${dx*.1}px,${dy*.1}px)`;
+  });
+  btn.addEventListener('mouseleave',()=>{btn.style.transform='';});
+});
+</script>
+</body>
+</html>
